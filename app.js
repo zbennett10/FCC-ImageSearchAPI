@@ -13,8 +13,8 @@ app.set('view engine', 'pug');
 // app.use('/assets', express.static(__dirname + '/public'));
 
 //configure routes
-var indexRoute = require('../routes/index');
-var apiRoute = require('../routes/api');
+var indexRoute = require('./routes/index');
+var apiRoute = require('./routes/api');
 
 app.use('/', indexRoute);
 app.use('/', apiRoute);
