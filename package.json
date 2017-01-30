@@ -14,8 +14,8 @@
   "author": "Zachary Bennett zbennett10@hotmail.com",
   "dependencies": {
     "body-parser": "*",
-    "express": "*",
-    "pug": "2.0.0-beta6",
-    "mongoose": "^4.8.0"
+    "express": "^4.14.1",
+    "mongoose": "^4.8.0",
+    "pug": "2.0.0-beta6"
   }
 }
