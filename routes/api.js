@@ -28,7 +28,7 @@ function saveSearch(search) {
     });
     searchDocument.save(function(err, searches) {
        if(err) throw err;
-       console.log('Saved Document!', searches);
+       console.log('Saved Search!');
     });
     mongoose.connection.close();
 }
@@ -41,6 +41,7 @@ function getHistory(res) {
     var query = Search.find({}).sort({timestamp: 'descending'}).limit(10);
     query.exec(function(err,searches) {
         if(err) throw err;
+        console.log("History Found");
         searches.forEach(search => history.push({searchTerm: '', timestamp: 0}));
         for(var i = 0; i < searches.length; i++) {
             history[i].searchTerm = searches[i].searchTerm;
@@ -56,6 +57,8 @@ function getImagesOffset(req,res) {
     request(`https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10&page=${req.query.offset}`, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             res.json(JSON.parse(body));
+        } else {
+            console.log(error);
         }
     });
 }
@@ -65,6 +68,8 @@ function getImages(req,res) {
     request(`https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10`, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             res.json(JSON.parse(body));
+        } else {
+            console.log(error);
         }
     });
 }
