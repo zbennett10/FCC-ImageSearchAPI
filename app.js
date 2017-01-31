@@ -10,7 +10,7 @@ app.set('view engine', 'pug');
 
 //middleware----------
 //serve static files from this directory
-// app.use('/assets', express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
 //configure routes
 var indexRoute = require('./routes/index');
