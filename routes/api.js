@@ -5,8 +5,6 @@ var request = require('request');
 var router = express();
 var Search = require('../models/search.js');
 
-const offsetSearchURL = `https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10&page=${req.query.offset}`;
-const searchURL = `https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10`;
 const mongoConnection = `mongodb://${MONGO_USER}:${MONGO_PASS}@ds137759.mlab.com:37759/freecodecamp`;
 
 //search endpoint
@@ -57,7 +55,7 @@ function getHistory(res) {
 
 function getImagesOffset(req,res) {
     saveSearch(req.params.searchStr);
-    request(offsetSearchURL, function (error, response, body) {
+    request(`https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10&page=${req.query.offset}`, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             res.json(JSON.parse(body));
         }
@@ -66,7 +64,7 @@ function getImagesOffset(req,res) {
 
 function getImages(req,res) {
     saveSearch(req.params.searchStr);
-    request(searchURL, function (error, response, body) {
+    request(`https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10`, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             res.json(JSON.parse(body));
         }
