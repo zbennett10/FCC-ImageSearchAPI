@@ -5,8 +5,6 @@ var request = require('request');
 var router = express();
 var Search = require('../models/search.js');
 
-const mongoConnection = `mongodb://${MONGO_USER}:${MONGO_PASS}@ds137759.mlab.com:37759/freecodecamp`;
-
 //search endpoint
 router.get('/api/search/:searchStr', function(req, res, next) {
     if(req.query.offset && (/^\d+$/g).test(req.query.offset)) {     //check if an offset was requested
@@ -23,7 +21,7 @@ router.get('/api/history', function(req,res) {
 
 //store search
 function saveSearch(search) {
-    mongoose.connect(mongoConnection);
+    mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASS}@ds137759.mlab.com:37759/freecodecamp`);
     var searchDocument = Search({
         searchTerm: search,
         timestamp: moment().unix()
@@ -39,7 +37,7 @@ function saveSearch(search) {
 function getHistory(res) {
     //example query to get every image
     var history = [];
-    mongoose.connect(mongoConnection);
+    mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASS}@ds137759.mlab.com:37759/freecodecamp`);
     var query = Search.find({}).sort({timestamp: 'descending'}).limit(10);
     query.exec(function(err,searches) {
         if(err) throw err;
