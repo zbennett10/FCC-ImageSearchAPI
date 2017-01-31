@@ -4,6 +4,7 @@ html
   
     title= title
     link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css")
+    link(rel='stylesheet', href="/assets/index.css")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js")
   
@@ -33,5 +34,7 @@ html
       
       
       footer.footer
-          a(href="https://pixabay.com/")
-            img(src="https://pixabay.com/static/img/public/leaderboard_a.png" alt="Pixabay")
+        div.container
+          div.jumbotron.bottom-jumbo
+            a(href="https://pixabay.com/")
+              img.center-img(src="https://pixabay.com/static/img/public/leaderboard_a.png" alt="Pixabay")
