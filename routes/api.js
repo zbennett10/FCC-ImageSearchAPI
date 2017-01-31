@@ -6,6 +6,8 @@ var request = require('request');
 var router = express();
 var Search = require('../models/search.js');
 
+const MONGO_CONNECTION = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@ds137759.mlab.com:37759/freecodecamp`;
+
 //search endpoint
 router.get('/api/search/:searchStr', function(req, res, next) {
     return req.query.offset && (/^\d+$/g).test(req.query.offset) ? getImages(req, res, req.query.offset) : getImages(req,res);
@@ -18,7 +20,7 @@ router.get('/api/history', function(req,res) {
 
 //store search
 function saveSearch(search) {
-    mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@ds137759.mlab.com:37759/freecodecamp`);
+    mongoose.connect(MONGO_CONNECTION);
     var searchDocument = Search({ //create search document based off of Search schema
         searchTerm: search,
         timestamp: moment().unix()
@@ -35,7 +37,7 @@ function getHistory(res) {
     //example query to get every image
     console.log('running history function');
     var history = [];
-    mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@ds137759.mlab.com:37759/freecodecamp`);
+    mongoose.connect(MONGO_CONNECTION);
     var query = Search.find({}).sort({timestamp: 'descending'}).limit(10); //find and sort last ten searches
     query.exec(function(err,searches) {
         if(err) throw err;
@@ -64,7 +66,6 @@ function getImages(req,res,offset) {
             });
     }
 }
-
 
 
 module.exports = router;
