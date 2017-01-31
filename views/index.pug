@@ -3,10 +3,35 @@ html
   head
   
     title= title
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js", type="text/javascript")
+    link(rel='stylesheet', href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js")
   
   body
   
-    h1= message/
-    h2 = message
+    div.container
+      div.jumbotron
+        h1.text-center ImageSearch API
+        h4.text-center A freeCodeCamp Project
+        
+    
+      div.row
+        div.col-lg-12
+          h1.text-center How to use this API
+    
+      div.row
+        div.col-lg-12
+          p This API contains two endpoints for your use.
+          p The first endpoint <strong>https://bennett-image-api.herokuapp.com/api/history</strong>
+            |  returns a JSON response of the ten most recent searches.
+          p The second endpoint <strong>https://bennett-image-api.herokuapp.com/api/search/your_search_here</strong
+            |  returns ten images from Pixabay's image API.
+          p This second enpoint also allows an offset - <strong>https://bennett-image-api.herokuapp.com//api/search/your_search_here?offset=3</strong
+          
+          
       
+      
+      
+      footer.footer
+          a(href="https://pixabay.com/")
+            img(src="https://pixabay.com/static/img/public/leaderboard_a.png" alt="Pixabay")
