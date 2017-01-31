@@ -8,12 +8,12 @@ var Search = require('../models/search.js');
 router.get('/api/search/:searchStr', function(req, res, next) {
     if(req.query.offset && (/^\d+$/g).test(req.query.offset)) {     //check if an offset was requested
         storeSearch(req.params.searchStr);
-        res.redirect(`https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10&page=${req.query.offset}`);
+        res.redirect(`https://pixabay.com/api/?key=${PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10&page=${req.query.offset}`);
         console.log('Request with offset made.');
         mongoose.connection.close();
     } else {
         storeSearch(req.params.searchStr);
-        res.redirect(`https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10`);
+        res.redirect(`https://pixabay.com/api/?key=${PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10`);
         console.log('Request made without offset.');
         mongoose.connection.close();
     }
@@ -27,7 +27,7 @@ router.get('/api/history', function(req,res) {
 
 //store search
 function storeSearch(search) {
-    mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@ds137759.mlab.com:37759/freecodecamp`);
+    mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASS}@ds137759.mlab.com:37759/freecodecamp`);
     var searchDocument = Search({
         searchTerm: search,
         timestamp: moment().unix()
@@ -43,7 +43,7 @@ function storeSearch(search) {
 function getHistory(res) {
     //example query to get every image
     var history = [];
-    mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@ds137759.mlab.com:37759/freecodecamp`);
+    mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASS}@ds137759.mlab.com:37759/freecodecamp`);
     var query = Search.find({}).sort({timestamp: 'descending'}).limit(10);
     query.exec(function(err,searches) {
         if(err) throw err;
