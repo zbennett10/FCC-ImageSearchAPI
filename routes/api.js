@@ -8,25 +8,9 @@ var Search = require('../models/search.js');
 //search endpoint
 router.get('/api/search/:searchStr', function(req, res, next) {
     if(req.query.offset && (/^\d+$/g).test(req.query.offset)) {     //check if an offset was requested
-        //getImagesOffset(req,res);
-        saveSearch(req.params.searchStr);
-    request(`https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10&page=${req.query.offset}`, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            res.json(JSON.parse(body));
-        } else {
-            console.log(error);
-        }
-    });
+        getImagesOffset(req,res);
     } else {
-        //getImages(req,res);
-        saveSearch(req.params.searchStr);
-    request(`https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10`, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            res.json(JSON.parse(body));
-        } else {
-            console.log(error);
-        }
-    });
+        getImages(req,res);      
     } 
 });
 
@@ -68,27 +52,41 @@ function getHistory(res) {
     mongoose.connection.close();
 }
 
-// function getImagesOffset(req,res) {
-//     saveSearch(req.params.searchStr);
-//     request(`https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10&page=${req.query.offset}`, function (error, response, body) {
-//         if (!error && response.statusCode == 200) {
-//             res.json(JSON.parse(body));
-//         } else {
-//             console.log(error);
-//         }
-//     });
-// }
+function getImagesOffset(req,res) {
+    saveSearch(req.params.searchStr);
+    console.log('about to make request');
+    var options = {
+        url: `https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10&page=${req.query.offset}`,
+        headers: {
+            'Host': 'www.pixabay.com'
+        }
+    }
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            res.json(JSON.parse(body));
+        } else {
+            console.log(error);
+        }
+    });
+}
 
-// function getImages(req,res) {
-//     saveSearch(req.params.searchStr);
-//     request(`https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10`, function (error, response, body) {
-//         if (!error && response.statusCode == 200) {
-//             res.json(JSON.parse(body));
-//         } else {
-//             console.log(error);
-//         }
-//     });
-// }
+function getImages(req,res) {
+    saveSearch(req.params.searchStr);
+    console.log('about to make request');
+    var options = {
+        url: `https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10`,
+        headers: {
+            'Host': 'www.pixabay.com'
+        }
+    }
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            res.json(JSON.parse(body));
+        } else {
+            console.log(error);
+        }
+    });
+}
 
 
 
