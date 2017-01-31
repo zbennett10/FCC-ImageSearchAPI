@@ -12,16 +12,6 @@ app.set('view engine', 'pug');
 //serve static files from this directory
 app.use(express.static(__dirname + '/public'));
 
-//handle 404
-app.use(function(req,res) {
-  res.send('404: Page Not Found', 404);
-});
-
-//handle 500
-app.use(function(req,res) {
-  res.send('500: Internal Server Error', 500);
-});
-
 //configure routes
 var indexRoute = require('./routes/index');
 var apiRoute = require('./routes/api');
