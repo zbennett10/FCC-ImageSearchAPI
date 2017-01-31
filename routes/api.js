@@ -36,6 +36,7 @@ function saveSearch(search) {
 //sort and retrieve 10 most recent searches
 function getHistory(res) {
     //example query to get every image
+    console.log('running history function');
     var history = [];
     mongoose.connect(`mongodb://${MONGO_USER}:${MONGO_PASS}@ds137759.mlab.com:37759/freecodecamp`);
     var query = Search.find({}).sort({timestamp: 'descending'}).limit(10);
@@ -55,13 +56,7 @@ function getHistory(res) {
 function getImagesOffset(req,res) {
     saveSearch(req.params.searchStr);
     console.log('about to make request');
-    var options = {
-        url: `https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10&page=${req.query.offset}`,
-        headers: {
-            'Host': 'www.pixabay.com'
-        }
-    }
-    request(options, function (error, response, body) {
+    request(`https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10&page=${req.query.offset}`, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             res.json(JSON.parse(body));
         } else {
@@ -73,13 +68,7 @@ function getImagesOffset(req,res) {
 function getImages(req,res) {
     saveSearch(req.params.searchStr);
     console.log('about to make request');
-    var options = {
-        url: `https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10`,
-        headers: {
-            'Host': 'www.pixabay.com'
-        }
-    }
-    request(options, function (error, response, body) {
+    request(`https://pixabay.com/api/?key=${process.env.PIXKEY}&q=${req.params.searchStr}&image_type=photo&per_page=10`, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             res.json(JSON.parse(body));
         } else {
